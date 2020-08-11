@@ -58,7 +58,7 @@ class Graph:
         Print each vertex in depth-first order
         beginning from starting_vertex.
         """
-        # Flip from queue to stack, enqueue to push and dequeue to pop 👍 
+        # Flip from queue to stack, enqueue to push and dequeue to pop 
         s = Stack()
         s.push(starting_vertex)
         
@@ -156,18 +156,27 @@ class Graph:
                     s.push(copy_path)
        
         return None
-    def dfs_recursive(self, starting_vertex, destination_vertex):
-        """
-        Return a list containing a path from
-        starting_vertex to destination_vertex in
-        depth-first order.
-        This should be done using recursion.
-        """
-        self.path.append(starting_vertex)
-        for neighbor in self.get_neighbors(starting_vertex):
-            if list(neighbor) == destination_vertex:
-                return list(self.path)
-            self.dfs_recursive(neighbor, destination_vertex)
+    def dfs_recursive(self, starting_vertex, destination_vertex, path=[], visited=None):
+        path += [starting_vertex]
+        v = path[len(path)-1]
+        if visited is None:
+            visited = set()
+
+        if v not in visited:
+            if v is destination_vertex:
+                if path[len(path) - 1] is destination_vertex:
+                    return path
+            else:
+                visited.add(v)
+
+                for next_v in self.get_neighbors(v):
+                    c = []
+                    c = [item for item in path]
+                    temp = self.dfs_recursive(
+                        next_v, destination_vertex, c, visited)
+                    if temp is not None:
+                        return temp
+
     
 if __name__ == '__main__':
     graph = Graph()  # Instantiate your graph
