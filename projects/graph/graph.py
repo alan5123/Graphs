@@ -158,7 +158,7 @@ class Graph:
         return None
     def dfs_recursive(self, starting_vertex, destination_vertex, path=[], visited=None):
         path += [starting_vertex]
-        v = path[len(path)-1]
+        v = path[-1]
         if visited is None:
             visited = set()
 
